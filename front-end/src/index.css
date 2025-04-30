@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "tailwind-scrollbar";
+
+body{
+  background: linear-gradient(rgba(0, 0, 0, .82), rgba(0, 0, 0, 0.42)), url("../public/bg.jpg");
+  /* background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("./assets/studio-background-concept-abstract-empty-light-gradient-purple-studio-room-background-product.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* background-attachment: scroll; */
+  /* height: 100%; */
+  /* margin: 0; */
+  /* padding: 0; */
+}
