@@ -1,19 +1,23 @@
 import React from 'react'
 import SuggestedPersonCard from './SuggestedPersonCard'
+import useGetSuggested from '../../../../hooks/useGetSuggested';
 
 
 const Rightside = () => {
+    const {loading, suggestedUsers} = useGetSuggested();
+
+
     return (
     <div className='flex-[6]'>
         <div className="flex-[6] sticky top-24">
             <div className="bg-[#1d1b2ccd] rounded-2xl p-4">
             <h1 className="text-center font-bold text-xl mb-4 text-white">Who to follow</h1>
-            
             <div className="space-y-2">
-                <SuggestedPersonCard />
-                <SuggestedPersonCard />
-                <SuggestedPersonCard />
-                <SuggestedPersonCard />
+            {
+            loading ? "loading..." : (suggestedUsers.map((su)=>(
+                <SuggestedPersonCard key='user.id' suggestedUser = {su}/>
+            )))
+            }
             </div>
             </div>
         </div>

@@ -3,12 +3,12 @@ import PostCard from './PostCard'
 import useGetPublications from '../../../../hooks/useGetPublications'
 
 const FeedCard = () => {
-    const {loading, publications} = useGetPublications();
+    const {loading, publications, refetchPublications } = useGetPublications();
     
   return (
     
     <div className=' overflow-hidden flex-[12] bg-transparent rounded-3xl  mt-4'>
-        <CreatePostCard/>
+        <CreatePostCard onPostSuccess={refetchPublications}/>
 
                     {/* Ovde normalno renderuj postove */}
                     {loading ? (

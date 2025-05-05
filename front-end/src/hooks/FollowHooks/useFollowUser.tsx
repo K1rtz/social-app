@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
-import { useAuthContext } from '../context/AuthContext';
 
-type CreatePostInputs = {
+type recieverUsernameType = {
     "content": string;
 }
 
-const useCreatePublication = () => {
+const useFollowUser = () => {
     
     const [loading, setLoading] = useState(false);
-    const {authUser} = useAuthContext()
+    const followUser = async(inputs: recieverUsernameType) => {
 
-    const createPublication = async(inputs: CreatePostInputs) => {
         try{
             setLoading(true);
-            const res = await fetch("/api/post/createpublication",{
+            const res = await fetch("/api/follow/followUser",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
@@ -26,7 +24,9 @@ const useCreatePublication = () => {
             if(!res.ok) {
                 console.log('uslismoovde');
                 throw new Error(data.error);
+                return false
             }
+
             return true
 
         } catch (error: any) {
@@ -36,7 +36,7 @@ const useCreatePublication = () => {
         }
     }
     
-    return { createPublication, loading };
+    return { followUser, loading };
 }
 
-export default useCreatePublication
+export default useFollowUser

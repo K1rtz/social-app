@@ -17,7 +17,6 @@ function App() {
   return (
     <>    
       <Routes>
-
         <Route path="/Home" element={ authUser ? <Home/> : <Navigate to={"/Login"}/>} /> 
         <Route path="/Signup" element={ !authUser ?  <Signup/> : <Navigate to={"/Home"}/> }/>
         <Route path="/Login" element={ !authUser ?  <Login/> : <Navigate to={"/Home"}/> }/>

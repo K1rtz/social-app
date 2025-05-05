@@ -1,31 +1,30 @@
 import React from 'react'
 import { useAuthContext } from '../../../context/AuthContext'
+import SearchBar from './SearchBar';
+import { useProfilePopup } from '../../../context/PopupProfileContext';
 
 const Navbar = () => {
 
   const {authUser} = useAuthContext();
+  const {openProfile, username} = useProfilePopup();
 
 
   return (
     <div className="fixed  w-7xl top-0 flex items-center justify-between p-4 rounded-b-4xl bg-[#1d1b2c9d] backdrop-blur-xl ">
     <div className="flex items-center">
-        <h1 className="text-2xl font-bold text-white">Purplexity</h1>
+        <h1 className="ml-4 mr-[-5px] text-2xl font-bold text-white">Purplexity</h1>
     </div>
 
-    <div className="flex justify-center flex-1">
-        <input 
-            type="text" 
-            placeholder="Search..." 
-            className="bg-purple-300/20 input w-96 h-10 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-    </div>
+    <SearchBar/>
 
     <div className="flex items-center ml-6 space-x-6">
         <div className="text-white cursor-pointer">
           <i className="bi bi-bell-fill"></i>
         </div>
 
-        <div className="h-10 w-10 rounded-full  border-2 border-white overflow-hidden cursor-pointer">
+        <div className="h-10 w-10 rounded-full  border-2 border-white overflow-hidden cursor-pointer"
+        onClick={()=>openProfile(authUser?.username ?? '')}
+        >
             <img 
                 src={authUser?.profilePic} 
                 alt="User Avatar" 

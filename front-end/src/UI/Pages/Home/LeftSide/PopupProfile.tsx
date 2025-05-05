@@ -1,207 +1,146 @@
 import React, { useState } from 'react'
 import PostCard from '../Middle/PostCard'
+import useFetchUserProfile from '../../../../hooks/useFetchUserProfile'
+import { useProfilePopup } from '../../../../context/PopupProfileContext'
 
-const PopupProfile = () => {
+const PopupProfile = ( {username} : {username : string} ) => {
 
     const [isCommentSectionOpen, setCommentSection] = useState(true)
-    const [editProfile, setEditProfile] = useState(false)
+
+    const { user, loading } = useFetchUserProfile(username);
+
+    const {closeProfile} = useProfilePopup()
+    
+    if (loading) {
+        return (
+          <div className="fixed inset-0 bg-[#2c273a]/70 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="relative bg-[#1f1d2b] w-[90%] max-w-[548px] rounded-2xl shadow-2xl p-6 text-white border border-[#3a334f] animate-pulse space-y-4">
+              
+              {/* Avatar & Info skeleton */}
+              <div className="flex flex-col items-center space-y-2">
+                <div className="w-24 h-24 rounded-full bg-[#322f42]"></div>
+                <div className="w-32 h-4 bg-[#322f42] rounded"></div>
+                <div className="w-20 h-3 bg-[#322f42] rounded"></div>
+                <div className="w-48 h-3 bg-[#322f42] rounded mt-2"></div>
+              </div>
+      
+              {/* Follow stats skeleton */}
+              <div className="flex justify-around border-t border-b border-[#3c3a4a] py-4">
+                <div className="space-y-2 text-center">
+                  <div className="w-8 h-4 bg-[#322f42] rounded mx-auto"></div>
+                  <div className="w-12 h-3 bg-[#322f42] rounded mx-auto"></div>
+                </div>
+                <div className="space-y-2 text-center">
+                  <div className="w-8 h-4 bg-[#322f42] rounded mx-auto"></div>
+                  <div className="w-12 h-3 bg-[#322f42] rounded mx-auto"></div>
+                </div>
+              </div>
+      
+              {/* Posts skeleton */}
+              <div className="space-y-4 mt-6">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="bg-[#201c2e] p-4 rounded-xl space-y-2">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-[#322f42] rounded-full"></div>
+                      <div className="flex flex-col space-y-1">
+                        <div className="w-24 h-3 bg-[#322f42] rounded"></div>
+                        <div className="w-16 h-2 bg-[#322f42] rounded"></div>
+                      </div>
+                    </div>
+                    <div className="w-full h-3 bg-[#322f42] rounded mt-2"></div>
+                    <div className="w-3/4 h-3 bg-[#322f42] rounded"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+  if (!user) {
+    {{console.log("Fetching user with username:", username);}}
+
+    return <div>Error: User not found
+    </div>
+  }
 
 
   return (
-
-    <div className="fixed top-[10%] left-[50%] -translate-x-[50%] flex items-center  justify-center z-50">
-        <div className="bg-[#140e38] p-4 rounded-xl w-[65vh] min-h-[80vh] border-4 border-[#0e0930]">
-        <div className="sticky flex-[6] top-24 flex-col  h-[80vh]">
-            <div className={` rounded-t-2xl ${!isCommentSectionOpen ? `h-[92%]` : `h-[40%]` }  p-4 text-white transition-all duration-500 ease-in-out`} 
-
-            >
-                    
-                <div className="relative">
-                    <div className="h-24 bg-[#252536] rounded-2xl overflow-hidden">
-                        <img className='' src="https://as2.ftcdn.net/jpg/09/20/54/15/1000_F_920541529_dRXMtHDd3iIXbDxRSaV91h685Or3FG9T.webp" alt="" />
-                    </div>
-                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-                        <div className="h-16 w-16 rounded-full border-4 border-[#1d1b2c] bg-gray-300 overflow-hidden">
-                        <img
-                            // src={authUser?.profilePic}
-                            alt="avatar"
-                            className="w-full h-full object-cover"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-
-        <div className="pt-12 text-center">
-          <h2 className="text-lg font-bold">Jane Boe</h2>
-          <p className="text-gray-400">@janeboe</p>
-          <p className="text-sm text-gray-400 mb-4">My bamkin bamkin bamkin bamkin bamkin</p>
-
-        {/* <h2 className="text-2xl font-semibold text-center mb-4">Profile Info</h2> */}
-        {/* <div className="mb-2 flex-col items-center justify-center">
-          <label htmlFor="fullName" className="block text-sm    ont-medium text-gray-200">Full Name </label>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder='Jane Boe'
-            disabled = {false}
-            className="w-[50%]   ml-2 mt-1 border border-gray-300  rounded p-[0.5px] text-center"
-          />
-        </div> */}
-                
-        {/* <div className="mb-4 flex-col items-center justify-center">
-          <label htmlFor="fullName" className="block text-sm font-medium text-gray-200">Tag </label>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder='@jaderoe'
-            disabled = {false}
-            
-            className="w-[50%]   ml-2 mt-1 border border-gray-300  rounded p-[0.5px] text-center"
-          />
-        </div> */}
+    loading ? "Loading" : 
+    <div className="fixed inset-0 bg-[#2c273a]/70 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="relative bg-[#1f1d2b] w-[90%] max-w-[548px] rounded-2xl shadow-2xl p-6 text-white border border-[#3a334f]">
         
-        {/* <div className=" flex-col items-center justify-center">
-          <label htmlFor="fullName" className="block text-sm font-medium text-gray-200">Description </label>
-          <textarea className='w-[70%] p ml-2 mt-1 border border-gray-300  rounded pl-[1%] pt-[1%] resize-none'
-          placeholder='My description'
-          rows={2}
-          maxLength={50}
-          >
-
-          </textarea>
-          
-        </div> */}
-
-        {/* <div className="mt-4 text-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-            Save Changes
-          </button>
-        </div> */}
-
-      </div>      
+        {/* Close icon */}
+        <button
+          onClick={closeProfile}
+          className="absolute top-4 right-4 text-[#c084fc] hover:text-[#d8b4fe] transition-colors"
+        >
+          <i className="bi bi-x-square-fill text-2xl"></i>
+        </button>
+  
+        {/* Avatar & Basic Info */}
+        <div className="flex flex-col items-center">
+          <img
+            src={user?.profilePic}
+            alt="avatar"
+            className="w-24 h-24 rounded-full border-4 border-[#322f42] object-cover shadow-md"
+          />
+          <h2 className="mt-4 text-xl font-bold text-white">{user?.fullName}</h2>
+          <p className="text-sm text-gray-400">@{user?.username}</p>
+          <p className="mt-2 text-sm text-gray-300 text-center">{user?.profileDescription}</p>
         </div>
-        <div className='text-center w-[20%] text-[18px]'>
-                User Posts
-            </div>
-        <div className={`bg-[#140e38] min-w-[20px] scrollbar-thin scrollbar-thumb-gray-700 transition-all duration-500 ease-in-out 
-          ${isCommentSectionOpen ? `h-[60%]` : `h-[8%]`}
-         scrollbar-track-gray-900  w-[100%] max-w-xl  flex-col flex items-center overflow-y-auto rounded-b-xl p-4 `}>
+  
+        {/* Follow stats */}
+        <div className="mt-4 flex justify-around border-t border-b border-[#3c3a4a] py-4">
+          <div className="text-center">
+            <p className="font-semibold">{user?._count?.follows ?? 0}</p>
+            <p className="text-xs text-gray-400">Followers</p>
+          </div>
+          <div className="text-center">
+            <p className="font-semibold">{user?._count?.following ?? 0}</p>
+            <p className="text-xs text-gray-400">Following</p>
+          </div>
+        </div>
+  
+        {/* Posts */}
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold mb-2 text-center text-white">User Posts</h3>
+          <div className="max-h-[40vh] overflow-y-auto overflow-visible space-y-4 bg-[#201c2e] p-3 rounded-2xl border border-[#3d3752]">
+          <div className="overflow-y-auto max-h-[35vh] pr-1 scrollbar-thin scrollbar-thumb-[#514266]/70 scrollbar-track-transparent">
 
-
-            <div className="max-w-2xl w-[100%] mx-auto bg-[#2a2638] rounded-2xl mb-4 border border-[#3b3560] p-4">
-                        {/* Header */}
-                        <div className="flex space-x-4 items-center">
-                            <img
-                                src=''
-                                alt="Profilna slika"
-                                className="h-12 w-12 rounded-full object-cover bg-[#231e30] border border-[#4b3c78]"
-                            />
-                            <div className="flex-1 flex flex-col">
-                                <div className="flex items-center gap-2">
-                                    <h1 className="font-bold text-white">BREAN</h1>
-                                    <span className="text-gray-400 text-sm">@lepabrena</span>
-                                    <span className="ml-auto text-gray-400 text-xs">zx</span>
-                                </div>
-                            </div>
+            {user?.publications.length === 0 ? (
+              <p className="text-gray-500 text-sm text-center">No posts to show.</p>
+            ) : (
+              <div className="space-y-4">
+                {user.publications.map((p) => (
+                  <div
+                    key={p.id}
+                    className="bg-[#1f1c2d] rounded-xl p-4 shadow-md hover:shadow-lg transition border border-[#332c44]"
+                  >
+                    <div className="flex mb-2">
+                      <img
+                        src={user.profilePic}
+                        alt="avatar"
+                        className="w-10 h-10 rounded-full object-cover mr-3"
+                      />
+                      <div className="flex flex-col">
+                        <div className="flex items-center">
+                          <p className="text-sm font-semibold text-white">{user.fullName}</p>
+                          <p className="text-xs text-gray-400 ml-2">@{user.username}</p>
                         </div>
-            
-                        {/* Content */}
-                        <div className="mt-3 p-3 rounded-xl bg-[#1f1d2e] text-gray-200 text-base">
-                            content
-                        </div>
-            
-                        {/* Action buttons */}
-                        <div className="flex items-center mt-3 gap-6 text-gray-400 text-lg">
-                            <button className="hover:text-pink-400 transition" onClick={(e) => { e.preventDefault(); /* like function */ }}>
-                                <i className="bi bi-heart-fill"></i>
-                            </button>
-                            <button className="hover:text-purple-400 transition" onClick={(e) => { e.preventDefault(); }}>
-                                <i className="bi bi-chat-dots-fill"></i>
-                            </button>
-                        </div>
-            
-
+                        <p className="text-gray-300 text-sm break-words mt-1 break-all">{p.content}</p>
+                      </div>
                     </div>
-                    <div className="max-w-2xl w-[100%] mx-auto bg-[#2a2638] rounded-2xl mb-4 border border-[#3b3560] p-4">
-                        {/* Header */}
-                        <div className="flex space-x-4 items-center">
-                            <img
-                                src=''
-                                alt="Profilna slika"
-                                className="h-12 w-12 rounded-full object-cover bg-[#231e30] border border-[#4b3c78]"
-                            />
-                            <div className="flex-1 flex flex-col">
-                                <div className="flex items-center gap-2">
-                                    <h1 className="font-bold text-white">BREAN</h1>
-                                    <span className="text-gray-400 text-sm">@lepabrena</span>
-                                    <span className="ml-auto text-gray-400 text-xs">zx</span>
-                                </div>
-                            </div>
-                        </div>
-            
-                        {/* Content */}
-                        <div className="mt-3 p-3 rounded-xl bg-[#1f1d2e] text-gray-200 text-base">
-                            content
-                        </div>
-            
-                        {/* Action buttons */}
-                        <div className="flex items-center mt-3 gap-6 text-gray-400 text-lg">
-                            <button className="hover:text-pink-400 transition" onClick={(e) => { e.preventDefault(); /* like function */ }}>
-                                <i className="bi bi-heart-fill"></i>
-                            </button>
-                            <button className="hover:text-purple-400 transition" onClick={(e) => { e.preventDefault(); }}>
-                                <i className="bi bi-chat-dots-fill"></i>
-                            </button>
-                        </div>
-            
-
-                    </div>
-                    <div className="max-w-2xl w-[100%] mx-auto bg-[#2a2638] rounded-2xl mb-4 border border-[#3b3560] p-4">
-                        {/* Header */}
-                        <div className="flex space-x-4 items-center">
-                            <img
-                                src=''
-                                alt="Profilna slika"
-                                className="h-12 w-12 rounded-full object-cover bg-[#231e30] border border-[#4b3c78]"
-                            />
-                            <div className="flex-1 flex flex-col">
-                                <div className="flex items-center gap-2">
-                                    <h1 className="font-bold text-white">BREAN</h1>
-                                    <span className="text-gray-400 text-sm">@lepabrena</span>
-                                    <span className="ml-auto text-gray-400 text-xs">zx</span>
-                                </div>
-                            </div>
-                        </div>
-            
-                        {/* Content */}
-                        <div className="mt-3 p-3 rounded-xl bg-[#1f1d2e] text-gray-200 text-base">
-                            content
-                        </div>
-            
-                        {/* Action buttons */}
-                        <div className="flex items-center mt-3 gap-6 text-gray-400 text-lg">
-                            <button className="hover:text-pink-400 transition" onClick={(e) => { e.preventDefault(); /* like function */ }}>
-                                <i className="bi bi-heart-fill"></i>
-                            </button>
-                            <button className="hover:text-purple-400 transition" onClick={(e) => { e.preventDefault(); }}>
-                                <i className="bi bi-chat-dots-fill"></i>
-                            </button>
-                        </div>
-            
-
-                    </div>
-        </div>      
-        {/* <div className='bg-blue-800 className="bg-[#122b2ccd] h-200 rounded-2xl p-4 text-white" '> </div> */}
-
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-        </div>
-
-        
-        </div>
+    </div>
+    </div>
   )
+  
 }
 
 export default PopupProfile

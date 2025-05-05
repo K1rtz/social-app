@@ -5,6 +5,7 @@ import postRoutes from "./routes/post.route.js"
 import cookieParser from "cookie-parser";
 import profileRoutes from "./routes/profile.route.js"
 import followRoutes from  "./routes/follow.route.js"
+import searchRoutes from "./routes/search.route.js"
 import dotenv from "dotenv"
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use("/api/messages", messageRoutes)
 app.use("/api/post", postRoutes)
 app.use("/api/profile", profileRoutes)
 app.use("/api/follow", followRoutes)
+app.use("/api/search", searchRoutes)
 
 
 

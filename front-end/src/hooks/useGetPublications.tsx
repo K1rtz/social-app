@@ -4,28 +4,33 @@ const useGetPublications = () => {
     const [loading, setLoading] = useState(false);
     const [publications, setPublications] = useState<PublicationType[]>([]);
 
-    useEffect(() =>{
+    // useEffect(() =>{
         const getPublications = async () =>{
             setLoading(true)
             try {
-                console.log('uslismouTRY')
+                // console.log('uslismouTRY')
                 const res = await fetch("/api/post/getpublications");
                 const data = await res.json();
                 if(data.error){
                     throw new Error(data.error);
                 }
+                // console.log(data.posts)
                 setPublications(data.posts);
-                console.log('zavrtsilismoTRY')
+                // console.log('zavrtsilismoTRY')
             } catch (error :any) {
                 console.log(error);
             }finally{
                 setLoading(false)
             }
         }
-        getPublications();
-    },[])
+        // getPublications();
+    // },[])
 
-    return {loading, publications}
+    useEffect(()=>{
+        getPublications()
+    }, []);
+
+    return {loading, publications, refetchPublications : getPublications}
 }
 
 export default useGetPublications

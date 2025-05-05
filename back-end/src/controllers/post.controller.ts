@@ -32,6 +32,47 @@ export const getPublications = async (req: Request, res: Response): Promise<any>
 
 
 }
+export const getSuggested = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const currentId = req.user.id;
+
+        const suggestedUsers = await prisma.user.findMany({
+            where:{
+                id:{not: currentId},
+                follows:{
+                    none:{
+                        followerId: currentId,
+                    }
+                }
+            },
+            select:{
+                id: true,
+                username: true,
+                fullName: true,
+                profilePic: true,
+            },
+            // orderBy:{
+            //     //@ts-ignore
+            //     random: true
+            // },
+            take: 4,
+        })
+
+        if(!suggestedUsers){
+            console.log("Error in suggested users!");
+            res.status(401).json({error: "Error in getting 4 users from db!"})
+        }
+
+        res.status(201).json({
+            suggestedUsers
+        })
+
+
+    } catch (error) {
+        console.log("Error in getSuggested!" + error);
+        res.status(500).json({error: "Internal server error!"});
+    }
+}
 
 
 

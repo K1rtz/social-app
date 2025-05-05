@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { formatTime } from '../../../../utils/utils';
+import { useProfilePopup } from '../../../../context/PopupProfileContext';
 
 const PostCard = ({ publication }: { publication: PublicationType }) => {
     const [isCommentOpen, setCommentOpen] = useState(false);
+    const { openProfile, username} = useProfilePopup();
+    
 
     return (
         <div className="max-w-2xl mx-auto bg-[#2a2638] rounded-2xl mb-4 border border-[#3b3560] p-4">
@@ -15,15 +18,19 @@ const PostCard = ({ publication }: { publication: PublicationType }) => {
                 />
                 <div className="flex-1 flex flex-col">
                     <div className="flex items-center gap-2">
-                        <h1 className="font-bold text-white">{publication.author.fullName}</h1>
-                        <span className="text-gray-400 text-sm">@{publication.author.username}</span>
+                        <h1 className="font-bold text-white ml-[-4px]
+                        cursor-pointer hover:underline
+                        "
+                        onClick={()=>{openProfile(publication.author.username)}}
+                        >{publication.author.fullName}</h1>
+                        <span className="text-gray-400 text-sm ">@{publication.author.username}</span>
                         <span className="ml-auto text-gray-400 text-xs">{formatTime(publication.createdAt)}</span>
                     </div>
                 </div>
             </div>
 
             {/* Content */}
-            <div className="mt-3 p-3 rounded-xl bg-[#1f1d2e] text-gray-200 text-base">
+            <div className="mt-3 p-3 rounded-xl bg-[#1f1d2e] text-gray-200 text-base break-all">
                 {publication.content}
             </div>
 
