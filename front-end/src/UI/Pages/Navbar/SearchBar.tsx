@@ -4,11 +4,11 @@ import { useProfilePopup } from '../../../context/PopupProfileContext';
 const SearchBar = () => {
 
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState<any[]>([]); // Zameni sa pravim tipom za korisnike
+    const [results, setResults] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const [showResults, setShowResults] = useState(false); // 👈 novo stanje
-    const wrapperRef = useRef<HTMLDivElement>(null); // 👈 referenca na celu komponentu
+    const [showResults, setShowResults] = useState(false);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const { openProfile, username} = useProfilePopup();
 
@@ -21,7 +21,7 @@ const SearchBar = () => {
         
         const debounceTimeout = setTimeout(() => {
             fetchSearchResults(query);
-        }, 300); // Delay od 300ms
+        }, 300); 
 
         return () => clearTimeout(debounceTimeout); // Očisti timeout kada se menja query
     }, [query]);
@@ -72,12 +72,12 @@ const SearchBar = () => {
 
 
         {query && results.length > 0 && showResults  &&(
-                        <div className="absolute  bg-[#261b2c] shadow-md p-2 rounded-md mt-11 max-h-60 w-96 overflow-y-auto">
+                        <div className="absolute  bg-[#251230] shadow-md p-2 rounded-md mt-11 max-h-60 w-96 overflow-y-auto">
                             {loading ? (
                                 <div className="text-center p-4">Loading...</div>
                             ) : (
                                 results.map((result, index) => (
-                                    <div key={index} className="cursor-pointer p-2 hover:bg-gray-200"
+                                    <div key={index} className="cursor-pointer rounded-xl p-2 hover:bg-[#33263b]"
                                     onClick={()=>openProfile(result.username)}>
                                         <div className="flex items-center">
                                             <img src={result.profilePic} alt="avatar" className="h-8 w-8 rounded-full" />

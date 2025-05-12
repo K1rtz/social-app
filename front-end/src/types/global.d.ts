@@ -3,9 +3,17 @@ type PublicationType = {
     author: AuthorType,
     authorId: string,
     content: string,
+    publicationLikes: PublicationLikeType[],
     createdAt: string,
+    _count: commentCount,
+}
+type commentCount = {
+    comments: number;
 }
 
+type PublicationLikeType = {
+    user: AuthorType;
+}
 type AuthorType = {
     fullName: string,
     username: string,

@@ -1,28 +1,27 @@
 import React, { useState } from 'react'
 import { useAuthContext } from '../context/AuthContext';
-import toast from 'react-hot-toast';
 
-type CreatePostInputs = {
+type LikePostInputs = {
     "content": string;
 }
 
-const useCreatePublication = () => {
+const useLikePublication = () => {
     
     const [loading, setLoading] = useState(false);
     const {authUser} = useAuthContext()
 
-    const createPublication = async(inputs: CreatePostInputs) => {
+    const likePublication = async(inputs: LikePostInputs) => {
         try{
             setLoading(true);
-            const res = await fetch("/api/post/createpublication",{
+            const res = await fetch("/api/post/likePublication",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(inputs),
             })
-            console.log(inputs);
-            console.log(res);
+            // console.log(inputs);
+            // console.log(res);
             const data = await res.json();
             if(!res.ok) {
                 console.log('uslismoovde');
@@ -31,14 +30,13 @@ const useCreatePublication = () => {
             return true
 
         } catch (error: any) {
-            toast.error(error.message);
             console.error(error.message);
         }finally{
             setLoading(false);
         }
     }
     
-    return { createPublication, loading };
+    return { likePublication, loading };
 }
 
-export default useCreatePublication
+export default useLikePublication

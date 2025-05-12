@@ -5,14 +5,46 @@ import prisma from "../db/prisma.js";
 export const getPublications = async (req: Request, res: Response): Promise<any> => {
     try {
         // const {skip} = req.body;
+        // const posts = await prisma.publication.findMany({
+        //     orderBy:{
+        //         createdAt: 'desc'
+        //     },
+        //     take: 10,
+        //     include:{
+        //         author: true,
+        //         comments: true,
+        //         publicationLikes: true,
+        //     }
+        // })
         const posts = await prisma.publication.findMany({
             orderBy:{
                 createdAt: 'desc'
             },
             take: 10,
             include:{
-                author: true,
-                comments: true,
+                author:{
+                    select:{
+                        fullName: true,
+                        username: true,
+                        profilePic: true,
+                    }
+                },
+                _count:{
+                    select: {
+                        comments: true
+                    }
+                },
+                publicationLikes:{
+                    include:{
+                        user:{
+                            select:{
+                                fullName: true,
+                                username: true,
+                                profilePic: true,
+                            }
+                        }
+                    }
+                }
             }
         })
         if(!posts){
@@ -165,4 +197,110 @@ export const createComment = async (req: Request, res: Response): Promise<any> =
         console.log("Error in postComment!");
         res.status(500).json({error: "Internal server error!"});
     }
+
+}
+
+export const likePublication = async (req: Request, res: Response): Promise<any> =>{
+
+    const publicationId = req.body.content;
+    const userId = req.user.id;
+
+    if(!req.user || !req.user.username){
+        return res.status(401).json({error: "Unauthorized"})
+    }
+
+    let user = await prisma.user.findUnique({
+        where:{
+            id: userId,
+        }
+    })
+    if(!user){
+        return res.status(404).json({error:"User not found!"})
+    }
+
+    let publication = await prisma.publication.findUnique({
+        where:{
+            id: publicationId,
+        }
+    })
+    if(!publication){
+        return res.status(404).json({error: "Publication not found!"})
+    }
+
+    let likePub = await prisma.publicationLikes.findUnique({
+        where:{
+            userId_publicationId:{
+                userId: userId,
+                publicationId: publicationId
+            }
+        }
+    })
+    if(likePub){
+        return res.status(400).json({error: "Already liked that post!"});
+    }
+
+    const likePublication = await prisma.publicationLikes.create({
+        data:{
+            publication:{
+                connect:{ id: publicationId}
+            },
+            user:{
+                connect: {id: userId}
+            }
+        }
+    })
+    if(!likePublication){
+        return res.status(500).json({error:"Error in liking post"})
+    }
+    
+    return res.status(201).json({likePublication})
+
+}
+
+
+export const getComments = async (req: Request, res: Response): Promise<any> =>{
+
+    const { q } = req.query;
+    console.log(q);
+    if (typeof q !== 'string' || q.trim() === '') {
+        return res.status(400).json({ error: 'Missing or invalid search query' });
+      }
+
+
+    try {
+
+        const comments = await prisma.comment.findMany({
+            where:{
+                publicationId: q,
+            },
+            select:{
+                author:{
+                    select:{
+                        fullName: true,
+                        username: true,
+                        profilePic: true,
+                    }
+                },
+                createdAt: true,
+                content: true,
+            },
+            orderBy:{
+                createdAt: "desc",
+            }
+        })
+        
+        if(!comments){
+            return res.status(404).json({error: "Error with getting publication"});
+        }
+
+        return res.status(201).json({comments})
+        
+
+
+
+    } catch (error: any) {
+        console.log("Error with creating publication" + error.message)
+        res.status(500).json({error: "Error with creating publication"});
+    }
+       
 }

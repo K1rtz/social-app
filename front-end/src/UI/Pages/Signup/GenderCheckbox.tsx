@@ -11,7 +11,7 @@ const GenderCheckbox = ({
 
 ) => {
   return (
-    <div className='flex mt-3'>
+    <div className='ml-1 flex mt-3'>
         <div className='form-control'>
             <label className="label gap-2 cursor-pointer">
                 <span className="label-text"> Male </span>
@@ -21,7 +21,7 @@ const GenderCheckbox = ({
                 />
             </label>
         </div>
-        <div className='form-control'>
+        <div className='form-control ml-2'>
             <label className="label gap-2 cursor-pointer">
                 <span className="label-text"> Female </span>
                 <input type="checkbox" className='checkbox border-slate-900'
@@ -31,7 +31,7 @@ const GenderCheckbox = ({
                 />
             </label>
         </div>
-        <div className='form-control'>
+        {/* <div className='form-control'>
             <label className="label gap-2 cursor-pointer">
                 <span className="label-text"> Other </span>
                 <input type="checkbox" className='checkbox border-slate-900'
@@ -40,7 +40,7 @@ const GenderCheckbox = ({
 
                 />
             </label>
-        </div>
+        </div> */}
     </div>
   )
 }

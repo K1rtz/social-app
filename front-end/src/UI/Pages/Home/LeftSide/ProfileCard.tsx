@@ -13,7 +13,7 @@ const ProfileCard = () => {
 
 
   return (
-    <div className='flex-[6]'>
+    <div className=' flex-[6]'>
 
     <div className="sticky flex-[6] top-24">
       <div className="bg-[#1d1b2ccd] rounded-2xl p-4 text-white">

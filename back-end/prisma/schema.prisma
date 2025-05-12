@@ -32,12 +32,29 @@ model User {
 
   conversations Conversation[]
   messages Message[]
+
+  
   publications Publication[]
   comments Comment[]
 
   follows Follows[] @relation("followers")
   following Follows[] @relation("following")
 
+  publicationLikes PublicationLikes[]
+  commentLikes CommentLikes[]
+
+}
+
+model Conversation{
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participantIds String[]
+  participants User[]
+  messageIds String[]
+  messages Message[]
 }
 
 model Follows{
@@ -52,17 +69,62 @@ model Follows{
 }
 
 
-model Conversation{
+
+
+model Publication{
   id String @id @default(cuid())
+  content String
+
+  authorId String
+  author User @relation(fields:[authorId], references: [id])
+
+  comments Comment[]
+
+  publicationLikes PublicationLikes[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  participantIds String[]
-  participants User[]
-  messageIds String[]
-  messages Message[]
 }
+
+model PublicationLikes{
+  id String @id @default(cuid())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  publication Publication @relation(fields: [publicationId], references: [id])
+  publicationId String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, publicationId])
+}
+
+
+model Comment{
+  id String @id @default(cuid())
+  content String
+
+  publicationId String
+  publication Publication @relation(fields:[publicationId], references:[id])
+
+  authorId String
+  author User @relation(fields:[authorId], references:[id])
+
+  createdAt DateTime @default(now())
+
+  commentLikes CommentLikes[]
+}
+
+model CommentLikes{
+  id String @id @default(cuid())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  comment Comment @relation(fields: [commentId], references: [id])
+  commentId String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, commentId])
+}
+
+
+
 
 model Message{
   id String @id @default(cuid())
@@ -78,30 +140,8 @@ model Message{
   updatedAt DateTime @updatedAt
 }
 
-model Publication{
-  id String @id @default(cuid())
-  content String
 
-  authorId String
-  author User @relation(fields:[authorId], references: [id])
 
-  comments Comment[]
-
-  createdAt DateTime @default(now())
-}
-
-model Comment{
-  id String @id @default(cuid())
-  content String
-
-  publicationId String
-  publication Publication @relation(fields:[publicationId], references:[id])
-
-  authorId String
-  author User @relation(fields:[authorId], references:[id])
-
-  createdAt DateTime @default(now())
-}
 
 
 enum Gender{

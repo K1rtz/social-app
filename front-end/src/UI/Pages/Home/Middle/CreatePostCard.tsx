@@ -48,7 +48,7 @@ const CreatePostCard = ({onPostSuccess} : {onPostSuccess: ()=>void}) => {
             />
 
           <div className="flex items-center justify-between mt-4">
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 ml-2">
               <button className="text-purple-400 hover:text-purple-500 transition">
                 <i className="bi bi-image text-xl"></i>
               </button>
@@ -61,7 +61,7 @@ const CreatePostCard = ({onPostSuccess} : {onPostSuccess: ()=>void}) => {
               className="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold rounded-xl transition disabled:opacity-50"
               disabled={false}
               type = "submit"
-              >{loading ? "Loading..." : "Objavi"}
+              >{loading ? "Loading..." : "Post"}
             </button>
           </div>
         </div>
