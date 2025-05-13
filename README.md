@@ -15,25 +15,16 @@
 🧪 Technologies Used
 
 Frontend:
-
 React (Vite)
-
 TypeScript
-
 Tailwind CSS
-
 DaisyUI + Bootstrap Icons
-
 React Router
 
 Backend:
-
 Node.js + Express
-
 Prisma ORM
-
 PostgreSQL (or SQLite during development)
-
 JWT Authentication
 
 📸 Screenshots
