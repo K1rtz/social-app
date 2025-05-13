@@ -1,24 +1,39 @@
 ✨ Features
+
 ✅ User registration and login
+
 📝 Creating, viewing, and commenting on posts
+
 👤 Viewing user profiles with follower/following counts
+
 ➕ Follow and unfollow functionality
+
 💬 Messaging between users
+
 🌙 Modern UI/UX with dark theme
 
 🧪 Technologies Used
 
 Frontend:
+
 React (Vite)
+
 TypeScript
+
 Tailwind CSS
+
 DaisyUI + Bootstrap Icons
+
 React Router
 
 Backend:
+
 Node.js + Express
+
 Prisma ORM
+
 PostgreSQL (or SQLite during development)
+
 JWT Authentication
 
 📸 Screenshots
