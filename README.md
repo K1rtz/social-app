@@ -11,9 +11,9 @@
 💬 Messaging between users
 
 🌙 Modern UI/UX with dark theme
+\n
 
-
-🧪 Technologies Used
+🧪 Technologies Used  
 
 Frontend:
 React (Vite),
