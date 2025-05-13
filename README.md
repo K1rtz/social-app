@@ -27,7 +27,7 @@ Prisma ORM,
 PostgreSQL,
 JWT Authentication
 
-📸 Screenshots
+## 📸 Screenshots
 ![Overall2](https://github.com/user-attachments/assets/316fd5eb-0190-4e54-861a-2da00a9711af)
 ![ProfileInspect](https://github.com/user-attachments/assets/465c743d-a7ac-43e3-89aa-9707b66105f7)
 ![Publication1](https://github.com/user-attachments/assets/1037e75a-4e97-4e85-861a-09a06981d3de)
