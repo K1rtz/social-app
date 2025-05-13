@@ -1,4 +1,4 @@
-##✨ Features
+## ✨ Features
 
 ✅ User registration and login
 
@@ -12,7 +12,7 @@
 
 🌙 Modern UI/UX with dark theme
 
-##🧪 Technologies Used  
+## 🧪 Technologies Used  
 
 Frontend:
 React (Vite),
