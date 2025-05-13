@@ -15,16 +15,16 @@
 🧪 Technologies Used
 
 Frontend:
-React (Vite)
-TypeScript
-Tailwind CSS
-DaisyUI + Bootstrap Icons
+React (Vite),
+TypeScript,
+Tailwind CSS,
+DaisyUI + Bootstrap Icons,
 React Router
 
 Backend:
-Node.js + Express
-Prisma ORM
-PostgreSQL (or SQLite during development)
+Node.js + Express,
+Prisma ORM,
+PostgreSQL,
 JWT Authentication
 
 📸 Screenshots
@@ -34,4 +34,3 @@ JWT Authentication
 ![Messages1](https://github.com/user-attachments/assets/83ba17b1-7047-4cda-af56-088e34f762d4)
 ![ChatSearch](https://github.com/user-attachments/assets/087c2161-3e9c-4859-a623-39f1871db44b)
 ![InnerChat](https://github.com/user-attachments/assets/637e0869-8863-47e7-b50d-dc92478549d3)
-![SearchBar](https://github.com/user-attachments/assets/bc042980-d057-45dd-ad28-c9fa144a1617)
