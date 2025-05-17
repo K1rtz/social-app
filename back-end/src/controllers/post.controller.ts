@@ -112,7 +112,7 @@ export const createPublication = async (req: Request, res: Response): Promise<an
     // return res.status(200).json("pog")
     try {
         const { content } = req.body;
-        console.log(req.user);
+        // console.log(req.user);
         const posterId = req.user.id;
         if(!req.user || !req.user.id){
             
@@ -261,7 +261,7 @@ export const likePublication = async (req: Request, res: Response): Promise<any>
 export const getComments = async (req: Request, res: Response): Promise<any> =>{
 
     const { q } = req.query;
-    console.log(q);
+    // console.log(q);
     if (typeof q !== 'string' || q.trim() === '') {
         return res.status(400).json({ error: 'Missing or invalid search query' });
       }

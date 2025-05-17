@@ -1,4 +1,5 @@
 import React, { useEffect, useState} from 'react'
+import toast from 'react-hot-toast';
 
 
 
@@ -19,7 +20,7 @@ const useFetchUserProfile = (username : string) => {
             console.log(data.userInfo);
             setUser(data.userInfo)
         } catch (error : any) {
-            console.log("Error in fetchuserprofile!!!!!!!!!!!")
+            toast.error(error.message);
         }finally{
             setLoading(false)
         }

@@ -6,11 +6,19 @@ import cookieParser from "cookie-parser";
 import profileRoutes from "./routes/profile.route.js"
 import followRoutes from  "./routes/follow.route.js"
 import searchRoutes from "./routes/search.route.js"
+import {app, server} from "./socket/socket.js"
 import dotenv from "dotenv"
+import path from "path"
+
+
 
 dotenv.config();
 
-const app = express();
+const PORT = process.env.PORT || 5000;
+const _dirname = path.resolve();
+
+// const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
 // app.get("/", (req, res) =>{
@@ -25,7 +33,17 @@ app.use("/api/follow", followRoutes)
 app.use("/api/search", searchRoutes)
 
 
+if(process.env.NODE_ENV !== "development"){
+    app.use(express.static(path.join(__dirname, "/front-end/dist")));
+    app.get("*",(req, res)=>{
+        res.sendFile(path.join(__dirname, "front-end", "dist", "index.html"));
+    })    
+}    
 
-app.listen(5000, ()=>{
-    console.log("Server is running on port 5000");
+server.listen(PORT, () => {
+    console.log("Server is running on port " + PORT )
 })
+
+// app.listen(5000, ()=>{
+//     console.log("Server is running on port 5000");
+// })

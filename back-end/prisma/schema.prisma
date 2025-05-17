@@ -29,7 +29,7 @@ model User {
 
   //track the conversations in which this user belongs
   conversationsIds String[] 
-
+  
   conversations Conversation[]
   messages Message[]
 

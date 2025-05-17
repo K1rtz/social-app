@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import prisma from "../db/prisma.js";
+import { getRecieverSocketId, io } from "../socket/socket.js";
 
 
 
@@ -7,7 +8,7 @@ export const sendMessage = async (req: Request, res: Response) : Promise<any> =>
     try {
         
         const {content} = req.body;
-        console.log(req.user);
+        // console.log(req.user);
         const {id: recieverId} = req.params;
         const senderId = req.user.id;
         if (!req.user || !req.user.id) {
@@ -42,9 +43,9 @@ export const sendMessage = async (req: Request, res: Response) : Promise<any> =>
                 }})
             }
             // console.log(conversation);
-            console.log('Creating message for conversation:', conversation.id);
-            console.log('arduino:', recieverId)
-            console.log('arduino:', content)
+            // console.log('Creating message for conversation:', conversation.id);
+            // console.log('arduino:', recieverId)
+            // console.log('arduino:', content)
             const newMessage = await prisma.message.create({
                 data:{
                     senderId,
@@ -52,7 +53,7 @@ export const sendMessage = async (req: Request, res: Response) : Promise<any> =>
                     conversationId: conversation.id
                 }
             })
-            console.log('DOSLO SE DOOVDE')
+            // console.log('DOSLO SE DOOVDE')
 
         if(newMessage){
             conversation = await prisma.conversation.update({
@@ -67,6 +68,12 @@ export const sendMessage = async (req: Request, res: Response) : Promise<any> =>
                     }
                 }
             })
+        }
+
+
+        const recieverSocketId = getRecieverSocketId(recieverId);
+        if(recieverSocketId){
+            io.to(recieverSocketId).emit("newMessage", newMessage)
         }
 
         res.status(201).json(newMessage);
@@ -110,7 +117,6 @@ export const getChatUsers = async (req: Request, res: Response): Promise<any> =>
             }
           }
         });
-        console.log(conversation);
         return {
           ...user,
           lastMessage: conversation?.messages[0] || null,

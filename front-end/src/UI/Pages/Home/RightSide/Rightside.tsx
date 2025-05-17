@@ -8,7 +8,7 @@ const Rightside = () => {
 
 
     return (
-    <div className='flex-[6] hidden md:block'>
+    <div className='flex-[6] hidden min-[900px]:block'>
         <div className="flex-[6] sticky top-24">
             <div className="bg-[#1d1b2ccd] rounded-2xl p-4">
             <h1 className="text-center font-bold text-xl mb-4 text-white">Who to follow</h1>

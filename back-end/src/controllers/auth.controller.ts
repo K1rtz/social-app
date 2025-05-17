@@ -129,7 +129,6 @@ export const getme = async(req: Request, res: Response): Promise<any> =>{
         if(!user){
             return res.status(404).json({error: "User not found"});
         }
-        console.log(user.following)
         res.status(200).json({
             id: user.id,
             fullName: user.fullName,

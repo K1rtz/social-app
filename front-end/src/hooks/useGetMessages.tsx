@@ -33,7 +33,7 @@ function useGetMessages() {
     
 
 
-    return {messages, loading, fetchMessages : getMessages}
+    return {messages, loading, setMessages, fetchMessages : getMessages}
 }
 
 export default useGetMessages

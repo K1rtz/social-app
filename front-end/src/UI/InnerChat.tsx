@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import useGetMessages from '../hooks/useGetMessages'
 import { useAuthContext } from '../context/AuthContext';
 import useSendMessage from '../hooks/useSendMessage';
+import { useSocketContext } from '../context/SocketContext';
 
 type InnerChatProps = {
     id: string;
@@ -11,8 +12,15 @@ type InnerChatProps = {
   };
 
 const InnerChat = ({id, pic, name, onBack }: InnerChatProps) => {
-    const {loading, messages,fetchMessages} = useGetMessages();
+    const {messages, setMessages, fetchMessages} = useGetMessages();
     const {authUser}  = useAuthContext();
+    const {onlineUsers, socket} = useSocketContext();
+    // const {socket} = useListenMessages();
+
+        socket?.on("newMessage", (newMessage) =>{
+            setMessages([...messages, newMessage]);
+            console.log(newMessage)
+        })
 
     const {sendMessage} = useSendMessage();
     const [messageContent, setMessageContent] = useState("");
@@ -31,11 +39,18 @@ const InnerChat = ({id, pic, name, onBack }: InnerChatProps) => {
   return (
     <div className="flex flex-col h-full bg-[#1c1a29]">
   {/* Header */}
-  <div className="flex items-center justify-between bg-[#2d2343] p-3 text-white">
+  <div className=" relative flex items-center justify-between bg-[#2d2343] p-2 text-white">
     <i className=" absolute bi bi-arrow-left cursor-pointer text-xl"
     onClick={onBack}
     ></i>
-    <div className="font-semibold text-lg text-center flex-1">{name}</div>
+    <div className="font-semibold text-lg text-center flex-1 ">
+      {name}
+            <span
+          className={`inline-block ml-1 mt-1 w-3 h-3 rounded-full border-1 border-black ${
+            onlineUsers.includes(id) ? "bg-green-500" : "bg-gray-500"
+          }`}
+          />
+    </div>
   </div>
 
   {/* Chat messages (scrollable) */}

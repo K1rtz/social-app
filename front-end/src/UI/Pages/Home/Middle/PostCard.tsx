@@ -130,7 +130,7 @@ const PostCard = ({ publication }: { publication: PublicationType }) => {
                     </div>
 
                     {comments.map((comment, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
+                    <div key={idx} className="flex items-start gap-3 mb-4">
                         <img
                         src={comment.author.profilePic}
                         alt="Profilna slika"

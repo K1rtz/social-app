@@ -39,7 +39,7 @@ const CreatePostCard = ({onPostSuccess} : {onPostSuccess: ()=>void}) => {
 
         <div className="flex-1 flex flex-col ">
           <textarea 
-            placeholder="Šta se dešava?"
+            placeholder="What is happening?"
             className="w-full text-white placeholder-gray-400 bg-[#373350] p-2 rounded-xl text-base resize-none focus:outline-none focus:ring-0 min-h-[50px]"
             value={publicationData.content}
             onChange= {(e)=>setPublicationData({content : e.target.value})}

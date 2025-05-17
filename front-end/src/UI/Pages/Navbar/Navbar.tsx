@@ -10,7 +10,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="fixed  w-7xl top-0 flex items-center justify-between p-4 rounded-b-4xl bg-[#1d1b2c9d] backdrop-blur-xl ">
+    <div className="fixed  w-full max-w-7xl top-0 flex mx-auto items-center justify-between p-4 rounded-b-4xl bg-[#1d1b2c9d] backdrop-blur-xl ">
     <div className="flex items-center">
         <h1 className="ml-4 mr-[-5px] text-2xl font-bold text-white">Purplexity</h1>
     </div>

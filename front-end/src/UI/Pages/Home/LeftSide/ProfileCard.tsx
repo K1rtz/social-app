@@ -34,9 +34,9 @@ const ProfileCard = () => {
 
         <div className="pt-12 text-center">
           <h2 className="text-lg font-bold cursor-pointer"
-          onClick={()=>openProfile(authUser?.username ?? '')}
+          onClick={()=>openProfile(authUser?.username ?? '')
+          }
           >{authUser?.fullName}
-
           </h2>
           <p className="text-gray-400">@{authUser?.username}</p>
           <p className="text-sm text-gray-400 mb-4">{authUser?.profileDescription}</p>
@@ -57,7 +57,7 @@ const ProfileCard = () => {
 
           <div className="pt-5">
             <a href="#" className="font-bold text-blue-400 hover:underline"
-            onClick={()=>openProfile("mardoe")}
+            onClick={()=>openProfile('mardoe')}
             >My Profile</a>
           </div>
 

@@ -69,29 +69,34 @@ const SearchBar = () => {
             className="bg-purple-300/20 input w-96 h-10 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
+            {query && results.length >= 0 && showResults && (
+            <div className="absolute z-50 bg-[#1d0c2c] shadow-lg rounded-lg mt-11 max-h-60 w-96 overflow-y-auto border border-[#3c2a4d]">
+                {loading ? (
+                <div className="text-center p-4 text-gray-400 animate-pulse">Searching...</div>
+                ) : results.length === 0 ? (
+                <div className="text-center p-4 text-gray-500">No results found.</div>
+                ) : (
+                results.map((result, index) => (
+                    <div
+                    key={index}
+                    onClick={() => openProfile(result.username)}
+                    className="flex items-center gap-3 p-3 cursor-pointer transition-colors duration-150 hover:bg-[#27243f] rounded-md"
+                    >
+                    <img
+                        src={result.profilePic}
+                        alt="avatar"
+                        className="h-9 w-9 rounded-full object-cover border border-[#2d1a4e]"
+                    />
+                    <div>
+                        <h1 className="text-sm font-medium text-white">{result.fullName}</h1>
+                        <h2 className="text-xs text-gray-400">@{result.username}</h2>
+                    </div>
+                    </div>
+                ))
+                )}
+            </div>
+            )}
 
-
-        {query && results.length > 0 && showResults  &&(
-                        <div className="absolute  bg-[#251230] shadow-md p-2 rounded-md mt-11 max-h-60 w-96 overflow-y-auto">
-                            {loading ? (
-                                <div className="text-center p-4">Loading...</div>
-                            ) : (
-                                results.map((result, index) => (
-                                    <div key={index} className="cursor-pointer rounded-xl p-2 hover:bg-[#33263b]"
-                                    onClick={()=>openProfile(result.username)}>
-                                        <div className="flex items-center">
-                                            <img src={result.profilePic} alt="avatar" className="h-8 w-8 rounded-full" />
-                                            <div className="ml-3">
-                                                <h1 className="text-sm font-semibold"
-                                                >{result.fullName}</h1>
-                                                <h2 className="text-xs text-gray-500">@{result.username}</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    )}
             </div>
 
 }

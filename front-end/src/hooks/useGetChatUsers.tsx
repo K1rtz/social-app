@@ -28,7 +28,8 @@ const useGetChatUsers = () => {
             if(data.error){
                 throw new Error(data.error + "dataerrrrrror")
             }
-            console.log(data);
+            console.log('FULL DATA:',data);
+            
 
             const mappedConversations: ConversationType[] = data.map((conv: any) => ({
                 id: conv.id,
